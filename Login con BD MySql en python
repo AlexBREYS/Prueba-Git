@@ -1,0 +1,92 @@
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox as mb
+import mysql.connector as sql
+
+ventana = tk.Tk()
+ventana.title("Welcome")
+ventana.geometry("280x300+300+250")
+
+color = '#c5e2f6'
+ventana['bg'] = color
+
+Label(ventana, bg=color, text="Login", font=("Arial Black", 16)).pack()
+
+
+Label(ventana, text="Usuario : ", bg=color, font=("Arial Black", 10)).pack()
+caja1 = Entry(ventana, font=("Arial", 10))
+caja1.pack()
+Label(ventana, text="Contraseña : ", bg=color, font=("Arial Black", 10)).pack()
+caja2 = Entry(ventana, show="*")
+caja2.pack()
+
+db = sql.connect(
+    host="localhost",
+    user="root",
+    passwd="",
+    database="prueba1"
+)
+cursor = db.cursor()
+
+def login():
+    usuario = caja1.get()
+    contr = caja2.get()
+    cursor.execute('SELECT * FROM usuario WHERE nombreusuario =%s AND password =%s',(usuario, contr))
+    if cursor.fetchall():
+        mb.showinfo(title="Login Correcto", message="Usuario y contraseña correctos")
+    else:
+        mb.showerror(title="Login incorrecto",
+                     message="Usuario o contraseña incorrecto")
+
+
+# cursor.close()
+
+def nuevaVentana():
+    newVentana = tk.Toplevel(ventana)
+    newVentana.title("Registro de Usuario")
+    newVentana.geometry("300x290+800+250")
+    newVentana['bg'] = color
+
+    Label(newVentana, text="Nombre : ", bg=color, font=("Arial Black", 10)).pack()
+    caja3 = Entry(newVentana)
+    caja3.pack()
+    Label(newVentana, text="Contraseña : ", bg=color, font=("Arial Black", 10)).pack()
+    caja4 = Entry(newVentana, show="*")
+    caja4.pack()
+    Label(newVentana, text="idrol : ", bg=color, font=("Arial Black", 10)).pack()
+    caja5 = Entry(newVentana)
+    caja5.pack()
+    Label(newVentana, text="Repita la Contraseña : ", bg=color,font=("Arial Black", 10)).pack()
+    caja6 = Entry(newVentana, show="*")
+    caja6.pack()
+
+    def registro():
+        nombreusuario = caja3.get()
+        password = caja4.get()
+        idrol = caja5.get()
+        Contra_reg_2 = caja6.get()
+        if (password == Contra_reg_2):
+            #insert = f"INSERT INTO usuario (idusuario, nombreusuario, password, idrol);"%("",nombreusuario,password,idrol)
+            #cursor.execute("insert into usuario(idusuario, nombreusuario, password, idrol) values ('%s', '%s', '%s', '%s')")
+            #cursor.execute("INSERT INTO usuario values(\'"++"\',\'"+nombreusuario+"\',\'"+password+"\',\'"+idrol+"')")
+            #insert = "insert into usuario values(%s,%s,%s,%s);"%(nombreusuario,password,idrol)
+            query = "INSERT INTO  `usuario` (`nombreusuario` ,`password` ,`idrol`) VALUES (%s,%s,%s)"
+            my_data = (nombreusuario, password, idrol)
+            cursor.execute(query, my_data)
+            db.commit()
+            mb.showinfo(title="Registro Correcto",message="Hola " + nombreusuario + " " + idrol + " ¡¡ \nSu registro fue exitoso.")
+            newVentana.destroy()
+        else:
+            mb.showerror(title="Contraseña Incorrecta",message="Error¡¡¡ \nLas contraseñas no coinciden.")
+
+    buttons = tk.Button(newVentana, text="Registrar", command=registro, bg=color,font=("Arial Rounded MT Bold", 10)).pack(side="bottom")
+
+Label(ventana, text=" ", bg=color,
+      font=("Arial", 10)).pack()
+Button(text=" ENTRAR ", command=login, bg='#a6d4f2',
+       font=("Arial Rounded MT Bold", 10)).pack()
+Label(ventana, text=" ", bg=color, font=("Arial Black", 10)).pack()
+Label(ventana, text="Registrate : ", bg=color, font=("Arial Black", 10)).pack()
+boton1 = Button(ventana, text="REGISTRO", bg='#a6d4f2', command=nuevaVentana, font=("Arial Rounded MT Bold", 10)).pack()
+
+ventana.mainloop()
