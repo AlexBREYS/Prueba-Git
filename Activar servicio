@@ -61,3 +61,35 @@ input_pass.send_keys(passw)
 
 #all_matches_button_login = browser.find_element(By.XPATH,'//*[@id="main_region"]/div/div/form/fieldset/div[4]/input').click()
 
+--------------------------------------------------------------------------------------------------------------------------------
+#Este es el bueno 
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+
+driver = webdriver.Chrome(r"C:\Users\B.R. ALEX\Downloads\chromedriver\chromedriver.exe")
+driver.get('https://192.168.90.39/')
+
+all_matches_button = driver.find_element(By.XPATH,'//*[@id="details-button"]').click()
+all_matches_button = driver.find_element(By.XPATH,'//*[@id="proceed-link"]').click()
+user = "Ferchon"
+password = ("#R.LOPEZ1992%")
+
+#Ingresa Usuario
+input_user = WebDriverWait(driver, 10).until(
+  EC.presence_of_element_located((By.XPATH, '//*[@id="username"]'))
+)
+#Ingresa contraseña
+input_pass = driver.find_element(By.XPATH, '//*[@id="password"]')
+input_user.send_keys(user)
+input_pass.send_keys(password)
+
+#Da clic en el boton para iniciar sesion
+login_button = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td/input').click()
+
+
+button_network = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td[1]/a[4] ').click()
+#all_matches_button_login = browser.find_element(By.XPATH,'//*[@id="main_region"]/div/div/form/fieldset/div[4]/input').click()
