@@ -62,7 +62,6 @@ input_pass.send_keys(passw)
 #all_matches_button_login = browser.find_element(By.XPATH,'//*[@id="main_region"]/div/div/form/fieldset/div[4]/input').click()
 
 --------------------------------------------------------------------------------------------------------------------------------
-#Este es el bueno 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -93,3 +92,54 @@ login_button = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td/inp
 
 button_network = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td[1]/a[4] ').click()
 #all_matches_button_login = browser.find_element(By.XPATH,'//*[@id="main_region"]/div/div/form/fieldset/div[4]/input').click()
+
+______________________________________________________________________________________________________________________________________
+------------------>ESTE ES EL BUENOOOOOO <---------------------
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+driver = webdriver.Chrome(r"C:\Users\B.R. ALEX\Downloads\chromedriver\chromedriver.exe")
+driver.get('https://192.168.90.5')
+
+all_matches_button = driver.find_element(By.XPATH,'//*[@id="details-button"]').click()
+all_matches_button2 = driver.find_element(By.XPATH,'//*[@id="proceed-link"]').click()
+user = "ubnt"
+password = ("#R.LOPEZ1992%")
+
+#Ingresa Usuario
+input_user = WebDriverWait(driver, 10).until(
+  EC.presence_of_element_located((By.XPATH, '//*[@id="username"]'))
+)
+#Ingresa contraseña
+input_pass = driver.find_element(By.XPATH, '//*[@id="password"]')
+input_user.send_keys(user)
+input_pass.send_keys(password)
+
+#Da clic en el boton para iniciar sesion
+login_button = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td/input').click()
+
+#Ingresar a Network
+button_network = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td[1]/a[4] ').click()
+time.sleep(1.5)
+
+#CLIC EN NAT
+button_net_nat = driver.find_element(By.XPATH,'//*[@id="wanNat"]').click()
+#button_net_nat1 = driver.find_element(By.XPATH,'//*[@id="wanNatSip"]').click()
+#button_net_nat2 = driver.find_element(By.XPATH,'//*[@id="wanNatPptp"]').click()
+#button_net_nat3 = driver.find_element(By.XPATH,'//*[@id="wanNatFtp"]').click()
+#button_net_nat4 = driver.find_element(By.XPATH,'//*[@id="wanNatRtsp"]').click()
+
+
+#Clic en Change
+button_save_change = driver.find_element(By.XPATH,'//*[@id="change"]').click()
+
+#clic en guardar cambios
+button_save_change = driver.find_element(By.XPATH,' //*[@id="apply_button"]').click()
+time.sleep(1.5)
+#Clic en salir
+button_salir = driver.find_element(By.XPATH,'/html/body/table/tbody/tr[2]/td[2]/input').click()
